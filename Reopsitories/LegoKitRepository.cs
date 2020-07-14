@@ -16,17 +16,24 @@ namespace legomylego.Reopsitories
 
     internal int Create(DTOLegoKit newDTOLegoKit)
     {
-      throw new NotImplementedException();
-    }
-
-    internal DTOLegoKit Get(int id)
-    {
-      throw new NotImplementedException();
+      string sql = @"
+      INSERT INTO legokits(x,y);
+      VALUES(@X,@Y);
+      SELECT LAST_INSERT_ID";
+      return _db.ExecuteScalar<int>(sql, newDTOLegoKit);
     }
 
     internal void Delete(int id)
     {
-      throw new NotImplementedException();
+      string sql = "DELETE FROM legokits WHERE id = @id;";
+      _db.ExecuteScalar(sql, new { id });
+
+    }
+
+    internal DTOLegoKit Get(int id)
+    {
+      string sql = "SELECT FROM legokits WHERE id = @id;";
+      return _db.QueryFirstOrDefault<DTOLegoKit>(sql, new { id });
     }
   }
 }

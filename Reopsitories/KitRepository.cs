@@ -14,24 +14,32 @@ namespace legomylego.Reopsitories
       _db = db;
     }
 
-    internal IEnumerable<Kit> Get()
+    internal int Create(Kit newKit)
     {
-      throw new NotImplementedException();
+      string sql = @"
+      INSERT INTO kits(x,y);
+      VALUES(@X,@Y);
+      SELECT LAST_INSERT_ID";
+      return _db.ExecuteScalar<int>(sql, newKit);
     }
 
-    internal Kit Get(int id)
+    internal IEnumerable<Kit> Get()
     {
-      throw new NotImplementedException();
+      string sql = "SELECT * FROM kits";
+      return _db.Query<Kit>(sql);
     }
 
     internal void Delete(int id)
     {
-      throw new NotImplementedException();
+      string sql = "DELETE FROM kits WHERE id = @id;";
+      _db.ExecuteScalar(sql, new { id });
+
     }
 
-    internal int Create(Kit newKit)
+    internal Kit Get(int id)
     {
-      throw new NotImplementedException();
+      string sql = "SELECT FROM kits WHERE id = @id;";
+      return _db.QueryFirstOrDefault<Kit>(sql, new { id });
     }
   }
 }
