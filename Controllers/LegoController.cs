@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using legomylego.Services;
 using legomylego.Models;
+using Microsoft.AspNetCore.Authorization;
+
 namespace legomylego.Controllers
 {
   [Route("api/[controller]")]
@@ -41,6 +43,7 @@ namespace legomylego.Controllers
       }
     }
     [HttpPost]
+    [Authorize]
     public ActionResult<Lego> Post([FromBody] Lego newLego)
     {
       try
@@ -54,6 +57,7 @@ namespace legomylego.Controllers
       }
     }
     [HttpDelete("{id}")]
+    [Authorize]
     public ActionResult<string> Delete(int id)
     {
       try

@@ -17,9 +17,9 @@ namespace legomylego.Reopsitories
     internal int Create(Lego newLego)
     {
       string sql = @"
-      INSERT INTO legos(x,y);
+      INSERT INTO legos(x,y)
       VALUES(@X,@Y);
-      SELECT LAST_INSERT_ID";
+      SELECT LAST_INSERT_ID();";
       return _db.ExecuteScalar<int>(sql, newLego);
     }
 
@@ -38,7 +38,7 @@ namespace legomylego.Reopsitories
 
     internal Lego Get(int id)
     {
-      string sql = "SELECT FROM legos WHERE id = @id;";
+      string sql = "SELECT * FROM legos WHERE id = @id;";
       return _db.QueryFirstOrDefault<Lego>(sql, new { id });
     }
   }

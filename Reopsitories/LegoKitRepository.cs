@@ -17,9 +17,9 @@ namespace legomylego.Reopsitories
     internal int Create(DTOLegoKit newDTOLegoKit)
     {
       string sql = @"
-      INSERT INTO legokits(x,y);
-      VALUES(@X,@Y);
-      SELECT LAST_INSERT_ID";
+      INSERT INTO legokits(kitId,legoId)
+      VALUES(@KitId,@LegoId);
+      SELECT LAST_INSERT_ID();";
       return _db.ExecuteScalar<int>(sql, newDTOLegoKit);
     }
 
@@ -30,10 +30,18 @@ namespace legomylego.Reopsitories
 
     }
 
-    internal DTOLegoKit Get(int id)
+    internal LegoKitHelper Get(int id)
     {
-      string sql = "SELECT FROM legokits WHERE id = @id;";
-      return _db.QueryFirstOrDefault<DTOLegoKit>(sql, new { id });
+
+      string sql = @"
+      SELECT *,
+      l.x as X,
+      k.price as Price, 
+      lk.id as legokitId FROM legoKits lk
+      INNER JOIN legos l ON l.id = lk.legoId
+      INNER JOIN kits k ON k.id = lk.kitId
+      WHERE lk.legoId = @id;";
+      return _db.QueryFirstOrDefault<LegoKitHelper>(sql, new { id });
     }
   }
 }

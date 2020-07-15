@@ -17,9 +17,9 @@ namespace legomylego.Reopsitories
     internal int Create(Kit newKit)
     {
       string sql = @"
-      INSERT INTO kits(x,y);
-      VALUES(@X,@Y);
-      SELECT LAST_INSERT_ID";
+      INSERT INTO kits(price,description,name)
+      VALUES(@Price,@Description,@Name);
+      SELECT LAST_INSERT_ID()";
       return _db.ExecuteScalar<int>(sql, newKit);
     }
 
@@ -38,7 +38,7 @@ namespace legomylego.Reopsitories
 
     internal Kit Get(int id)
     {
-      string sql = "SELECT FROM kits WHERE id = @id;";
+      string sql = "SELECT * FROM kits WHERE id = @id;";
       return _db.QueryFirstOrDefault<Kit>(sql, new { id });
     }
   }

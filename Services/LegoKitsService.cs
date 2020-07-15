@@ -11,9 +11,9 @@ namespace legomylego.Services
       _repo = repo;
     }
 
-    internal DTOLegoKit Get(int id)
+    internal LegoKitHelper Get(int id)
     {
-      DTOLegoKit found = _repo.Get(id);
+      LegoKitHelper found = _repo.Get(id);
       if (found == null)
       {
         throw new Exception("invalid id mi amigo");

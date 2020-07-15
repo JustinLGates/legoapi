@@ -4,6 +4,7 @@ using legomylego.Services;
 using Microsoft.AspNetCore.Mvc;
 
 using legomylego.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace legomylego.Controllers
 {
@@ -12,9 +13,11 @@ namespace legomylego.Controllers
   public class KitsController : ControllerBase
   {
     private readonly KitsService _service;
-    public KitsController(KitsService service)
+    private readonly LegoKitsService _lkService;
+    public KitsController(KitsService service, LegoKitsService lkService)
     {
       _service = service;
+      _lkService = lkService;
     }
     [HttpGet]
     public ActionResult<IEnumerable<Kit>> getAll()
@@ -42,7 +45,21 @@ namespace legomylego.Controllers
         return BadRequest(e.Message);
       }
     }
+    [HttpGet("{id}/details")]
+    public ActionResult<LegoKitHelper> getByKiIid(int id)
+    {
+      try
+      {
+        return Ok(_lkService.Get(id));
+      }
+      catch (Exception e)
+      {
+
+        return BadRequest(e.Message);
+      }
+    }
     [HttpPost]
+    [Authorize]
     public ActionResult<Kit> Post([FromBody] Kit newKit)
     {
       try
@@ -55,6 +72,7 @@ namespace legomylego.Controllers
         return BadRequest(e.Message);
       }
     }
+    [Authorize]
     [HttpDelete("{id}")]
     public ActionResult<string> Delete(int id)
     {
