@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using legomylego.Services;
 using Microsoft.AspNetCore.Mvc;
-
 using legomylego.Models;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Security.Claims;
 namespace legomylego.Controllers
 {
   [Route("api/[controller]")]
@@ -64,6 +63,8 @@ namespace legomylego.Controllers
     {
       try
       {
+        // string email = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+        // use the line above to get email info from auth
         return Ok(_service.Create(newKit));
       }
       catch (Exception e)
@@ -78,6 +79,8 @@ namespace legomylego.Controllers
     {
       try
       {
+        string email = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
         return Ok(_service.Delete(id));
       }
       catch (Exception e)

@@ -1,8 +1,9 @@
 using System;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using legomylego.Models;
 using legomylego.Services;
+using Microsoft.AspNetCore.Authorization;
+
 namespace legomylego.Controllers
 {
   [Route("api/[controller]")]
@@ -16,6 +17,7 @@ namespace legomylego.Controllers
     }
 
     [HttpPost]
+    [Authorize]
     public ActionResult<DTOLegoKit> Post([FromBody] DTOLegoKit newDTOLegoKits)
     {
       try
@@ -29,6 +31,7 @@ namespace legomylego.Controllers
       }
     }
     [HttpDelete("{id}")]
+    [Authorize]
     public ActionResult<string> Delete(int id)
     {
       try
